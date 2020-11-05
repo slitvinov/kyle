@@ -1,20 +1,20 @@
-tellsimp(E(v*u), 0)$
-tellsimp(E(1), 1)$
-tellsimp(E(v^2), 1)$
-tellsimp(E(u^2), 1)$
-EE(e):= block(
+Euv(e):= block([ans],
   local(la, be, su, E),
+  tellsimp(E('v*'u), 0),
+  tellsimp(E(1), 1),
+  tellsimp(E('v^2), 1),
+  tellsimp(E('u^2), su^2),
   declare([la, be, su], constant, E, linear),
-  ev(E(e), expand, infeval));
+  ans : ev(E(e), expand, infeval),
+  remrule(E, all),
+  ans);
 x: be * v$
-p: la * (x + su * u)$
+p: la * (x + u)$
 P: x * (v - p)$
-U: su * u * (v - p)$
-%e0: diff(EE(P), be)$
-%e1: EE(P + U)$
+U: u * (v - p)$
+%e0: diff(Euv(P), be);
+%e1: Euv(P + U);
+
+%so0: solve([%e1], [la])[1];
+
 %so: solve([%e0, %e1], [la, be])[1];
-EE(p^2), %so;
-EE(P), %so;
-p, %so, factor;
-P, %so, factor;
-U, %so, factor;
